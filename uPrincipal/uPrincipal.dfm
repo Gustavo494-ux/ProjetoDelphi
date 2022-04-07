@@ -12,6 +12,7 @@ object Form1: TForm1
   Font.Style = []
   Menu = mainPrincipal
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object mainPrincipal: TMainMenu

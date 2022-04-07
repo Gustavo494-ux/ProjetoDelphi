@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, ZAbstractConnection,
+  ZConnection;
 
 type
   TForm1 = class(TForm)
@@ -25,6 +26,7 @@ type
     Produto3: TMenuItem;
     VendaPorData1: TMenuItem;
     procedure Fechar1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,9 +40,29 @@ implementation
 
 {$R *.dfm}
 
+uses uDTMConexao;
+
   procedure TForm1.Fechar1Click(Sender: TObject);
   begin
     Application.Terminate;
+  end;
+
+  procedure TForm1.FormCreate(Sender: TObject);
+  begin
+    dtmPrincipal  := TdtmPrincipal.Create(self);
+    with dtmPrincipal.ConexaoDB do
+    begin
+      SQLHourGlass := True;
+      Protocol := 'mssql';
+      LibraryLocation := 'F:\Projetos\Delphi\delphi_e_sql-server_na_pratica\ProjetoDelphi\dll\ntwdblib.dll';
+      HostName := '.\SHOPCONTROL9';
+      Port := 1433;
+      User := 'sa';
+      Password := 'Senha123';
+      Database := 'vendas';
+      Connected := True;
+
+    end;
   end;
 
 end.
