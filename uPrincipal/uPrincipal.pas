@@ -8,7 +8,7 @@ uses
   ZConnection;
 
 type
-  TForm1 = class(TForm)
+  TfrmPrincipal = class(TForm)
     mainPrincipal: TMainMenu;
     Cadastro1: TMenuItem;
     Cadastro2: TMenuItem;
@@ -34,7 +34,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  frmPrincipal: TfrmPrincipal;
 
 implementation
 
@@ -42,12 +42,12 @@ implementation
 
 uses uDTMConexao;
 
-  procedure TForm1.Fechar1Click(Sender: TObject);
+  procedure TfrmPrincipal.Fechar1Click(Sender: TObject);
   begin
     Application.Terminate;
   end;
 
-  procedure TForm1.FormCreate(Sender: TObject);
+  procedure TfrmPrincipal.FormCreate(Sender: TObject);
   begin
     dtmPrincipal  := TdtmPrincipal.Create(self);
     with dtmPrincipal.ConexaoDB do

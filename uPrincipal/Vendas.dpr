@@ -2,15 +2,17 @@ program Vendas;
 
 uses
   Vcl.Forms,
-  uPrincipal in 'uPrincipal.pas' {Form1},
-  uDTMConexao in 'datamodule\uDTMConexao.pas' {dtmPrincipal: TDataModule};
+  uPrincipal in 'uPrincipal.pas' {frmPrincipal},
+  uDTMConexao in 'datamodule\uDTMConexao.pas' {dtmPrincipal: TDataModule},
+  uTelaHeranca in 'heranca\uTelaHeranca.pas' {frmTelaHeranca};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.CreateForm(TdtmPrincipal, dtmPrincipal);
+  Application.CreateForm(TfrmTelaHeranca, frmTelaHeranca);
   Application.Run;
 end.
