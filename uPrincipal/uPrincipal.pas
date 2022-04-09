@@ -27,6 +27,7 @@ type
     VendaPorData1: TMenuItem;
     procedure Fechar1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Categoria1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -40,7 +41,14 @@ implementation
 
 {$R *.dfm}
 
-uses uDTMConexao;
+uses uDTMConexao, uCadCategoria;
+
+  procedure TfrmPrincipal.Categoria1Click(Sender: TObject);
+  begin
+    frmCadCategoria := TfrmCadCategoria.Create(self);
+    frmCadCategoria.ShowModal;
+    frmCadCategoria.Release;
+  end;
 
   procedure TfrmPrincipal.Fechar1Click(Sender: TObject);
   begin
