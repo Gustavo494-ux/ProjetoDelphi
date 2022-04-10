@@ -2,6 +2,7 @@ object frmTelaHeranca: TfrmTelaHeranca
   Left = 0
   Top = 0
   ActiveControl = pgcPrincipal
+  AlphaBlend = True
   BorderStyle = bsDialog
   Caption = 'Informe Aqui o Titulo'
   ClientHeight = 641
