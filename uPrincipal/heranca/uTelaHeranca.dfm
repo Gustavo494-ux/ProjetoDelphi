@@ -58,7 +58,6 @@ object frmTelaHeranca: TfrmTelaHeranca
         Width = 1062
         Height = 507
         Align = alClient
-        DataSource = dtsListagem
         TabOrder = 1
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
@@ -86,6 +85,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Height = 25
       Caption = '&Novo'
       TabOrder = 0
+      OnClick = btnNovoClick
     end
     object btnAlterar: TBitBtn
       Left = 184
@@ -94,6 +94,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Height = 25
       Caption = '&Alterar'
       TabOrder = 1
+      OnClick = btnAlterarClick
     end
     object btnCancelar: TBitBtn
       Left = 346
@@ -102,6 +103,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Height = 25
       Caption = '&Cancelar'
       TabOrder = 2
+      OnClick = btnCancelarClick
     end
     object btnNavigator: TDBNavigator
       Left = 447
@@ -119,6 +121,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Height = 25
       Caption = '&Gravar'
       TabOrder = 4
+      OnClick = btnGravarClick
     end
     object btnDeletar: TBitBtn
       Left = 264
@@ -127,6 +130,7 @@ object frmTelaHeranca: TfrmTelaHeranca
       Height = 25
       Caption = '&Deletar'
       TabOrder = 5
+      OnClick = btnDeletarClick
     end
     object btnFechar: TBitBtn
       Left = 986

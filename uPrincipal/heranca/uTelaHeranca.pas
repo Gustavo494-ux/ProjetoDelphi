@@ -18,7 +18,6 @@ type
     pnlListagemTopo: TPanel;
     mskEdit: TMaskEdit;
     btnPesquisar: TBitBtn;
-    grdListagem: TDBGrid;
     btnNovo: TBitBtn;
     btnAlterar: TBitBtn;
     btnCancelar: TBitBtn;
@@ -28,10 +27,20 @@ type
     btnFechar: TBitBtn;
     QryListagem: TZQuery;
     dtsListagem: TDataSource;
+    grdListagem: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnDeletarClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
   private
     { Private declarations }
+   procedure ControlarBotoes(btnNovo, btnAlterar,btnCancelar,
+   btnGravar, btnDeletar  : TBitBtn; btnNavigator:TDBNavigator;
+   pgcPrincipal:TPageControl;Flag:boolean);
+
   public
     { Public declarations }
   end;
@@ -43,10 +52,57 @@ implementation
 
 {$R *.dfm}
 
-  procedure TfrmTelaHeranca.btnFecharClick(Sender: TObject);
+  procedure TfrmTelaHeranca.ControlarBotoes(btnNovo, btnAlterar,btnCancelar,
+   btnGravar, btnDeletar  : TBitBtn; btnNavigator:TDBNavigator;
+   pgcPrincipal:TPageControl;Flag:boolean);
+  begin
+      btnNovo.Enabled := Flag;
+      btnDeletar.Enabled := flag;
+      btnAlterar.Enabled := Flag;
+      btnNavigator.Enabled := Flag;
+      pgcPrincipal.Pages[0].TabVisible := Flag;
+      btnCancelar.Enabled := not(Flag);
+      btnGravar.Enabled := not(flag);
+  end;
+
+procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
+  begin
+    ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
+    btnNavigator,pgcPrincipal,false);
+  end;
+
+procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
+  begin
+    ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
+      btnNavigator,pgcPrincipal,true);
+  end;
+
+procedure TfrmTelaHeranca.btnAlterarClick(Sender: TObject);
+  begin
+   ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
+      btnNavigator,pgcPrincipal,false);
+  end;
+
+procedure TfrmTelaHeranca.btnCancelarClick(Sender: TObject);
+  begin
+  ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
+    btnNavigator,pgcPrincipal,true);
+  end;
+
+procedure TfrmTelaHeranca.btnDeletarClick(Sender: TObject);
+  begin
+      ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
+      btnNavigator,pgcPrincipal,true);
+  end;
+
+procedure TfrmTelaHeranca.btnFecharClick(Sender: TObject);
   begin
      Close;
   end;
+
+
+
+
 
 procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
   begin
