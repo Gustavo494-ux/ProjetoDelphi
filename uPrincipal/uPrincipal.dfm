@@ -13,52 +13,54 @@ object frmPrincipal: TfrmPrincipal
   Menu = mainPrincipal
   OldCreateOrder = False
   WindowState = wsMaximized
+  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object mainPrincipal: TMainMenu
     Left = 600
-    object Cadastro1: TMenuItem
+    object menuCadastro: TMenuItem
       Caption = 'Cadastro'
-      object Cliente1: TMenuItem
+      object CadastroCliente: TMenuItem
         Caption = 'Cliente'
       end
-      object Cliente2: TMenuItem
+      object LinhaCadastro1: TMenuItem
         Caption = '-'
       end
-      object Categoria1: TMenuItem
+      object RelatorioVendaPorData: TMenuItem
         Caption = 'Categoria'
-        OnClick = Categoria1Click
+        OnClick = RelatorioVendaPorDataClick
       end
-      object Produto1: TMenuItem
+      object CadastroProduto: TMenuItem
         Caption = 'Produto'
       end
-      object Categoria2: TMenuItem
+      object LinhaCadastro2: TMenuItem
         Caption = '-'
       end
-      object Fechar1: TMenuItem
+      object FecharAplicacao: TMenuItem
         Caption = 'Fechar'
-        OnClick = Fechar1Click
+        OnClick = FecharAplicacaoClick
       end
     end
-    object Cadastro2: TMenuItem
+    object menuMovimentacao: TMenuItem
       Caption = 'Movimenta'#231#227'o'
-      object Vendas1: TMenuItem
+      ImageName = ' '
+      object MovimentoVendas: TMenuItem
         Caption = 'Vendas'
       end
     end
-    object Relatrios1: TMenuItem
+    object menuRelatrios: TMenuItem
       Caption = 'Relat'#243'rio'
-      object Cliente3: TMenuItem
+      object RelatorioCliente: TMenuItem
         Caption = 'Cliente'
       end
-      object Cliente4: TMenuItem
+      object LinhaRelatorio1: TMenuItem
         Caption = '-'
       end
-      object Produto2: TMenuItem
+      object RelatorioProduto: TMenuItem
         Caption = 'Produto'
       end
-      object Produto3: TMenuItem
+      object LinhaRelatorio2: TMenuItem
         Caption = '-'
       end
       object VendaPorData1: TMenuItem
