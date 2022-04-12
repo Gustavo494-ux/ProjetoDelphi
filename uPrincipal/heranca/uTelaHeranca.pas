@@ -35,6 +35,9 @@ type
     procedure btnCancelarClick(Sender: TObject);
     procedure btnDeletarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure grdListagemTitleClick(Column: TColumn);
   private
     { Private declarations }
     EstadoDoCadastro: TEstadoDoCadastro;
@@ -57,6 +60,11 @@ implementation
 
 {$R *.dfm}
 
+  procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
+  begin
+    qryListagem.Close;
+  end;
+
 procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
   begin
       // Assim que o formulario é criado as configurações de conexão são realizadas;
@@ -66,7 +74,20 @@ procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
      btnNavigator.DataSource := dtsListagem;
   end;
 
-  //Procedure de controle de tela
+  procedure TfrmTelaHeranca.FormShow(Sender: TObject);
+  begin
+     if(qryListagem.Sql.Text <> EmptyStr) then
+     begin
+       qryListagem.Open;
+     end;
+  end;
+
+  procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
+  begin
+            ShowMessage(Column.FieldName);
+  end;
+
+//Procedure de controle de tela
 procedure TfrmTelaHeranca.ControlarBotoes(btnNovo, btnAlterar,btnCancelar,
  btnGravar, btnDeletar  : TBitBtn; btnNavigator:TDBNavigator;
  pgcPrincipal:TPageControl;Flag:boolean);

@@ -9,6 +9,7 @@ object dtmPrincipal: TdtmPrincipal
     Properties.Strings = (
       'controls_cp=CP_UTF16'
       'AutoEncodeStrings=True')
+    Connected = True
     HostName = '.\SHOPCONTROL9'
     Port = 0
     Database = 'Vendas'
