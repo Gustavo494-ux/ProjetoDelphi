@@ -28,6 +28,7 @@ type
     QryListagem: TZQuery;
     dtsListagem: TDataSource;
     grdListagem: TDBGrid;
+    Lbl_Indice: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
@@ -47,10 +48,12 @@ type
    pgcPrincipal:TPageControl;Flag:boolean);
 
     procedure ControlarIndiceTab(pgcPrincipal: TPageControl; index: integer);
+    function RetornarCampoTraduzido(Campo: string): string;
 
 
   public
     { Public declarations }
+    IndiceAtual : string;
   end;
 
 var
@@ -59,6 +62,18 @@ var
 implementation
 
 {$R *.dfm}
+  function TfrmTelaHeranca.RetornarCampoTraduzido(Campo:string):string;
+  var i:Integer;
+  begin
+    for I := 0 to QryListagem.Fields.Count -1 do
+    begin
+      if QryListagem.Fields[i].FieldName = Campo then
+       begin
+          Result:= QryListagem.Fields[i].DisplayLabel;
+          break;
+       end;
+    end;
+  end;
 
   procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
   begin
@@ -84,7 +99,10 @@ procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
 
   procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
   begin
-            ShowMessage(Column.FieldName);
+   IndiceAtual := Column.FieldName;
+   qryListagem.IndexFieldNames := IndiceAtual;
+   Lbl_Indice.Caption := RetornarCampoTraduzido(IndiceAtual);
+
   end;
 
 //Procedure de controle de tela
@@ -137,8 +155,6 @@ end;
 
 procedure TfrmTelaHeranca.btnAlterarClick(Sender: TObject);
 begin
-
-
  ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
     btnNavigator,pgcPrincipal,false);
     EstadoDoCadastro := ecAlterar;

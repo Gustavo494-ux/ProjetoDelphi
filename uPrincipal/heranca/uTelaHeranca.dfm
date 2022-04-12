@@ -37,6 +37,14 @@ object frmTelaHeranca: TfrmTelaHeranca
         Height = 57
         Align = alTop
         TabOrder = 0
+        ExplicitTop = -6
+        object Lbl_Indice: TLabel
+          Left = 16
+          Top = 3
+          Width = 63
+          Height = 13
+          Caption = 'Nome Campo'
+        end
         object mskEdit: TMaskEdit
           Left = 16
           Top = 22

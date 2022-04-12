@@ -51,7 +51,7 @@ uses uDTMConexao, uCadCategoria;
 
     with dtmPrincipal.ConexaoDB do
     begin
-      SQLHourGlass := True;
+      SQLHourGlass := false;
       Protocol := 'mssql';
       LibraryLocation := 'F:\Projetos\Delphi\delphi_e_sql-server_na_pratica\ProjetoDelphi\dll\ntwdblib.dll';
       HostName := '.\SHOPCONTROL9';
