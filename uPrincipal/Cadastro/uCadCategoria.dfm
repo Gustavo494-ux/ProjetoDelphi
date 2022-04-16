@@ -9,13 +9,13 @@ inherited frmCadCategoria: TfrmCadCategoria
   inherited pgcPrincipal: TPageControl
     Width = 751
     Height = 317
+    ExplicitWidth = 751
+    ExplicitHeight = 317
     inherited tabListagem: TTabSheet
       ExplicitWidth = 743
       ExplicitHeight = 289
       inherited pnlListagemTopo: TPanel
         Width = 743
-        ExplicitLeft = -3
-        ExplicitTop = -6
         ExplicitWidth = 743
       end
       inherited grdListagem: TDBGrid
@@ -44,7 +44,7 @@ inherited frmCadCategoria: TfrmCadCategoria
   inherited pnlRodaPe: TPanel
     Top = 317
     Width = 751
-    ExplicitTop = 319
+    ExplicitTop = 317
     ExplicitWidth = 751
     inherited btnNavigator: TDBNavigator
       Left = 441

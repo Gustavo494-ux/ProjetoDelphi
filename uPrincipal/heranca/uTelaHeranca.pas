@@ -39,6 +39,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure grdListagemTitleClick(Column: TColumn);
+    procedure mskEditChange(Sender: TObject);
   private
     { Private declarations }
     EstadoDoCadastro: TEstadoDoCadastro;
@@ -51,9 +52,12 @@ type
     function RetornarCampoTraduzido(Campo: string): string;
 
 
+
+
   public
     { Public declarations }
     IndiceAtual : string;
+    procedure ExibirLabelIndice(Campo: string; aLabel: Tlabel);
   end;
 
 var
@@ -75,6 +79,12 @@ implementation
     end;
   end;
 
+  procedure TfrmTelaHeranca.ExibirLabelIndice(Campo:string; aLabel:Tlabel);
+  begin
+    aLabel.Caption := RetornarCampoTraduzido(Campo);
+
+  end;
+
   procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
   begin
     qryListagem.Close;
@@ -86,6 +96,10 @@ procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
      QryListagem.Connection := dtmPrincipal.ConexaoDB;
      dtsListagem.DataSet := QryListagem;
      grdListagem.DataSource := dtsListagem;
+     grdListagem.Options := [dgTitles,dgIndicator,dgColumnResize,
+                             dgColLines,dgRowLines,dgTabs,dgRowSelect,
+                             dgAlwaysShowSelection,dgCancelOnExit,
+                             dgTitleClick,dgTitleHotTrack];
      btnNavigator.DataSource := dtsListagem;
   end;
 
@@ -93,6 +107,8 @@ procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
   begin
      if(qryListagem.Sql.Text <> EmptyStr) then
      begin
+        QryListagem.IndexFieldNames := indiceAtual;
+        ExibirLabelIndice(IndiceAtual, Lbl_Indice);
        qryListagem.Open;
      end;
   end;
@@ -101,8 +117,13 @@ procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
   begin
    IndiceAtual := Column.FieldName;
    qryListagem.IndexFieldNames := IndiceAtual;
-   Lbl_Indice.Caption := RetornarCampoTraduzido(IndiceAtual);
+    ExibirLabelIndice(IndiceAtual,Lbl_Indice);
 
+  end;
+
+  procedure TfrmTelaHeranca.mskEditChange(Sender: TObject);
+  begin
+    QryListagem.Locate(IndiceAtual, TmaskEdit(Sender).Text,[loPartialKey]);
   end;
 
 //Procedure de controle de tela

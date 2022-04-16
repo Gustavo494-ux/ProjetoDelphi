@@ -37,7 +37,6 @@ object frmTelaHeranca: TfrmTelaHeranca
         Height = 57
         Align = alTop
         TabOrder = 0
-        ExplicitTop = -6
         object Lbl_Indice: TLabel
           Left = 16
           Top = 3
@@ -53,6 +52,7 @@ object frmTelaHeranca: TfrmTelaHeranca
           TabOrder = 0
           Text = ''
           TextHint = 'Digite sua Pesquisa'
+          OnChange = mskEditChange
         end
         object btnPesquisar: TBitBtn
           Left = 431
@@ -61,6 +61,7 @@ object frmTelaHeranca: TfrmTelaHeranca
           Height = 25
           Caption = '&Pesquisar'
           TabOrder = 1
+          Visible = False
         end
       end
       object grdListagem: TDBGrid
@@ -69,6 +70,7 @@ object frmTelaHeranca: TfrmTelaHeranca
         Width = 1062
         Height = 507
         Align = alClient
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
         TabOrder = 1
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clWindowText
