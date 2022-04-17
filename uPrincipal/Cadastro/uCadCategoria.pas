@@ -30,7 +30,6 @@ implementation
 procedure TfrmCadCategoria.FormCreate(Sender: TObject);
 begin
   inherited;
-  IndiceAtual := 'Descricao';
+  IndiceAtual := 'descricao';
 end;
-
 end.

@@ -66,144 +66,156 @@ var
 implementation
 
 {$R *.dfm}
-  function TfrmTelaHeranca.RetornarCampoTraduzido(Campo:string):string;
-  var i:Integer;
-  begin
-    for I := 0 to QryListagem.Fields.Count -1 do
+
+
+  {$region 'Funções e Prodecures'}
+
+    function TfrmTelaHeranca.RetornarCampoTraduzido(Campo:string):string;
+      var i:Integer;
+      begin
+        for I := 0 to QryListagem.Fields.Count -1 do
+        begin
+          if lowercase(QryListagem.Fields[i].FieldName) =lowercase(Campo) then
+           begin
+              Result:= QryListagem.Fields[i].DisplayLabel;
+              break;
+           end;
+        end;
+      end;
+
+    procedure TfrmTelaHeranca.ControlarBotoes(btnNovo, btnAlterar,btnCancelar,
+     btnGravar, btnDeletar  : TBitBtn; btnNavigator:TDBNavigator;
+     pgcPrincipal:TPageControl;Flag:boolean);
     begin
-      if QryListagem.Fields[i].FieldName = Campo then
-       begin
-          Result:= QryListagem.Fields[i].DisplayLabel;
-          break;
-       end;
+        btnNovo.Enabled := Flag;
+        btnDeletar.Enabled := flag;
+        btnAlterar.Enabled := Flag;
+        btnNavigator.Enabled := Flag;
+        pgcPrincipal.Pages[0].TabVisible := Flag;
+        btnCancelar.Enabled := not(Flag);
+        btnGravar.Enabled := not(flag);
     end;
-  end;
 
-  procedure TfrmTelaHeranca.ExibirLabelIndice(Campo:string; aLabel:Tlabel);
-  begin
-    aLabel.Caption := RetornarCampoTraduzido(Campo);
+    procedure TfrmTelaHeranca.ExibirLabelIndice(Campo:string; aLabel:Tlabel);
+    begin
+      aLabel.Caption := RetornarCampoTraduzido(Campo);
 
-  end;
+    end;
 
-  procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
-  begin
-    qryListagem.Close;
-  end;
+    procedure TfrmTelaHeranca.ControlarIndiceTab(pgcPrincipal:TPageControl;
+    index: integer);
+    begin
+       if pgcPrincipal.Pages[index].TabVisible then
+        pgcPrincipal.TabIndex := 0
+    end;
+  {$endRegion}
 
-procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
-  begin
-      // Assim que o formulario é criado as configurações de conexão são realizadas;
-     QryListagem.Connection := dtmPrincipal.ConexaoDB;
-     dtsListagem.DataSet := QryListagem;
-     grdListagem.DataSource := dtsListagem;
-     grdListagem.Options := [dgTitles,dgIndicator,dgColumnResize,
-                             dgColLines,dgRowLines,dgTabs,dgRowSelect,
-                             dgAlwaysShowSelection,dgCancelOnExit,
-                             dgTitleClick,dgTitleHotTrack];
-     btnNavigator.DataSource := dtsListagem;
-  end;
 
-  procedure TfrmTelaHeranca.FormShow(Sender: TObject);
-  begin
-     if(qryListagem.Sql.Text <> EmptyStr) then
-     begin
-        QryListagem.IndexFieldNames := indiceAtual;
-        ExibirLabelIndice(IndiceAtual, Lbl_Indice);
-       qryListagem.Open;
-     end;
-  end;
+  {$region 'Eventos dos Formulario'}
 
-  procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
-  begin
-   IndiceAtual := Column.FieldName;
-   qryListagem.IndexFieldNames := IndiceAtual;
-    ExibirLabelIndice(IndiceAtual,Lbl_Indice);
+    procedure TfrmTelaHeranca.FormClose(Sender: TObject; var Action: TCloseAction);
+    begin
+      qryListagem.Close;
+    end;
 
-  end;
+    procedure TfrmTelaHeranca.FormCreate(Sender: TObject);
+    begin
+        // Assim que o formulario é criado as configurações de conexão são realizadas;
+       QryListagem.Connection := dtmPrincipal.ConexaoDB;
+       dtsListagem.DataSet := QryListagem;
+       grdListagem.DataSource := dtsListagem;
+       grdListagem.Options := [dgTitles,dgIndicator,dgColumnResize,
+                               dgColLines,dgRowLines,dgTabs,dgRowSelect,
+                               dgAlwaysShowSelection,dgCancelOnExit,
+                               dgTitleClick,dgTitleHotTrack];
+       btnNavigator.DataSource := dtsListagem;
+    end;
 
-  procedure TfrmTelaHeranca.mskEditChange(Sender: TObject);
-  begin
-    QryListagem.Locate(IndiceAtual, TmaskEdit(Sender).Text,[loPartialKey]);
-  end;
+    procedure TfrmTelaHeranca.FormShow(Sender: TObject);
+    begin
+       if(qryListagem.Sql.Text <> EmptyStr) then
+       begin
+          QryListagem.IndexFieldNames := indiceAtual;
+          ExibirLabelIndice(IndiceAtual, Lbl_Indice);
+         qryListagem.Open;
+       end;
 
-//Procedure de controle de tela
-procedure TfrmTelaHeranca.ControlarBotoes(btnNovo, btnAlterar,btnCancelar,
- btnGravar, btnDeletar  : TBitBtn; btnNavigator:TDBNavigator;
- pgcPrincipal:TPageControl;Flag:boolean);
-begin
-    btnNovo.Enabled := Flag;
-    btnDeletar.Enabled := flag;
-    btnAlterar.Enabled := Flag;
-    btnNavigator.Enabled := Flag;
-    pgcPrincipal.Pages[0].TabVisible := Flag;
-    btnCancelar.Enabled := not(Flag);
-    btnGravar.Enabled := not(flag);
-end;
+       ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,
+                      btnDeletar,btnNavigator,pgcPrincipal,true);
+    end;
 
-procedure TfrmTelaHeranca.ControlarIndiceTab(pgcPrincipal:TPageControl;
-index: integer);
-begin
-   if pgcPrincipal.Pages[index].TabVisible then
-    pgcPrincipal.TabIndex := 0
-end;
+    procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
+    begin
+     IndiceAtual := Column.FieldName;
+     qryListagem.IndexFieldNames := IndiceAtual;
+      ExibirLabelIndice(IndiceAtual,Lbl_Indice);
 
-procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
-begin
-  ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
-  btnNavigator,pgcPrincipal,false);
-  EstadoDoCadastro := ecInserir;
-End;
+    end;
 
-procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
-begin
-  try
+    procedure TfrmTelaHeranca.mskEditChange(Sender: TObject);
+    begin
+      QryListagem.Locate(IndiceAtual, TmaskEdit(Sender).Text,[loPartialKey]);
+    end;
+  {$endRegion}
+
+
+  {$region 'Eventos Click Dos Componentes'}
+
+    procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
+    begin
+      ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
+      btnNavigator,pgcPrincipal,false);
+      EstadoDoCadastro := ecInserir;
+    End;
+
+    procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
+    begin
+      try
+        ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
+        btnNavigator,pgcPrincipal,true);
+        ControlarIndiceTab(pgcPrincipal,0);
+
+        if(EstadoDoCadastro  = ecInserir) then
+          showMessage('Inserir')
+        else if (EstadoDoCadastro = ecAlterar) then
+          showMessage('Alterado')
+        else
+          showMessage('Nada aconteceu')
+
+
+      finally
+        EstadoDoCadastro := ecNenhum;
+      end;
+    end;
+
+    procedure TfrmTelaHeranca.btnAlterarClick(Sender: TObject);
+    begin
+     ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
+        btnNavigator,pgcPrincipal,false);
+        EstadoDoCadastro := ecAlterar;
+    end;
+
+    procedure TfrmTelaHeranca.btnCancelarClick(Sender: TObject);
+    begin
     ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
-    btnNavigator,pgcPrincipal,true);
-    ControlarIndiceTab(pgcPrincipal,0);
+      btnNavigator,pgcPrincipal,true);
 
-    if(EstadoDoCadastro  = ecInserir) then
-      showMessage('Inserir')
-    else if (EstadoDoCadastro = ecAlterar) then
-      showMessage('Alterado')
-    else
-      showMessage('Nada aconteceu')
+      ControlarIndiceTab(pgcPrincipal,0);
+      EstadoDoCadastro := ecNenhum;
+    end;
 
+    procedure TfrmTelaHeranca.btnDeletarClick(Sender: TObject);
+    begin
+        ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
+        btnNavigator,pgcPrincipal,true);
+        ControlarIndiceTab(pgcPrincipal,0);
 
-  finally
-    EstadoDoCadastro := ecNenhum;
-  end;
-end;
+        EstadoDoCadastro := ecNenhum;
+    end;
 
-procedure TfrmTelaHeranca.btnAlterarClick(Sender: TObject);
-begin
- ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
-    btnNavigator,pgcPrincipal,false);
-    EstadoDoCadastro := ecAlterar;
-end;
-
-procedure TfrmTelaHeranca.btnCancelarClick(Sender: TObject);
-begin
-ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
-  btnNavigator,pgcPrincipal,true);
-
-  ControlarIndiceTab(pgcPrincipal,0);
-  EstadoDoCadastro := ecNenhum;
-end;
-
-procedure TfrmTelaHeranca.btnDeletarClick(Sender: TObject);
-begin
-    ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
-    btnNavigator,pgcPrincipal,true);
-    ControlarIndiceTab(pgcPrincipal,0);
-
-    EstadoDoCadastro := ecNenhum;
-end;
-
-procedure TfrmTelaHeranca.btnFecharClick(Sender: TObject);
-begin
-   Close;
-end;
-
-
-
+    procedure TfrmTelaHeranca.btnFecharClick(Sender: TObject);
+    begin
+       Close;
+    end;
+  {$endRegion}
 end.
