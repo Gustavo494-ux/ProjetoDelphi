@@ -44,9 +44,9 @@ type
     { Private declarations }
     EstadoDoCadastro: TEstadoDoCadastro;
 
-   procedure ControlarBotoes(btnNovo, btnAlterar,btnCancelar,
-   btnGravar, btnDeletar  : TBitBtn; btnNavigator:TDBNavigator;
-   pgcPrincipal:TPageControl;Flag:boolean);
+    procedure ControlarBotoes(btnNovo, btnAlterar,btnCancelar,
+    btnGravar, btnDeletar  : TBitBtn; btnNavigator:TDBNavigator;
+    pgcPrincipal:TPageControl;Flag:boolean);
 
     procedure ControlarIndiceTab(pgcPrincipal: TPageControl; index: integer);
     function RetornarCampoTraduzido(Campo: string): string;
@@ -54,10 +54,16 @@ type
 
 
 
+
   public
     { Public declarations }
     IndiceAtual : string;
+
     procedure ExibirLabelIndice(Campo: string; aLabel: Tlabel);
+
+    function Gravar(EstadoDoCadastro:TEstadoDoCadastro): boolean; virtual;
+    function Listar: boolean; virtual;
+    function Excluir: boolean; virtual;
   end;
 
 var
@@ -110,6 +116,29 @@ implementation
     end;
   {$endRegion}
 
+  {$region 'Métodos Virtuais'}
+
+    function TfrmTelaHeranca.Gravar(EstadoDoCadastro: TEstadoDoCadastro): boolean;
+    begin
+      case EstadoDoCadastro of
+        ecInserir: ShowMessage('Inserir');
+        ecAlterar: ShowMessage('Alterado');
+      end;
+      Result := True;
+    end;
+
+    function TfrmTelaHeranca.Listar: boolean;
+    begin
+      ShowMessage('Registro Deletado');
+      Result:= True;
+    end;
+
+    function TfrmTelaHeranca.Excluir: boolean;
+    begin
+      ShowMessage('Registro Deletado');
+      Result:= True;
+    end;
+  {$endregion}
 
   {$region 'Eventos dos Formulario'}
 
@@ -144,10 +173,10 @@ implementation
                       btnDeletar,btnNavigator,pgcPrincipal,true);
     end;
 
-    procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
+procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
     begin
-     IndiceAtual := Column.FieldName;
-     qryListagem.IndexFieldNames := IndiceAtual;
+      IndiceAtual := Column.FieldName;
+      qryListagem.IndexFieldNames := IndiceAtual;
       ExibirLabelIndice(IndiceAtual,Lbl_Indice);
 
     end;
@@ -171,17 +200,12 @@ implementation
     procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
     begin
       try
-        ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
-        btnNavigator,pgcPrincipal,true);
-        ControlarIndiceTab(pgcPrincipal,0);
-
-        if(EstadoDoCadastro  = ecInserir) then
-          showMessage('Inserir')
-        else if (EstadoDoCadastro = ecAlterar) then
-          showMessage('Alterado')
-        else
-          showMessage('Nada aconteceu')
-
+        if Gravar(EstadoDoCadastro) then
+        begin
+          ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
+          btnNavigator,pgcPrincipal,true);
+          ControlarIndiceTab(pgcPrincipal,0);
+        end;
 
       finally
         EstadoDoCadastro := ecNenhum;
@@ -206,11 +230,15 @@ implementation
 
     procedure TfrmTelaHeranca.btnDeletarClick(Sender: TObject);
     begin
-        ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
-        btnNavigator,pgcPrincipal,true);
-        ControlarIndiceTab(pgcPrincipal,0);
+        if Excluir then
+        begin
+          ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
+          btnNavigator,pgcPrincipal,true);
+          ControlarIndiceTab(pgcPrincipal,0);
 
-        EstadoDoCadastro := ecNenhum;
+          EstadoDoCadastro := ecNenhum;
+        end;
+
     end;
 
     procedure TfrmTelaHeranca.btnFecharClick(Sender: TObject);

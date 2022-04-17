@@ -26,10 +26,16 @@ implementation
 
 {$R *.dfm}
 
+{$region 'Eventos do Formulario'}
+  procedure TfrmCadCategoria.FormCreate(Sender: TObject);
+    begin
+      inherited;
+      IndiceAtual := 'descricao';
+    end;
+{$endRegion}
 
-procedure TfrmCadCategoria.FormCreate(Sender: TObject);
-begin
-  inherited;
-  IndiceAtual := 'descricao';
-end;
+{$region 'Eventos Gerais'}
+{$endregion}
+
+
 end.
