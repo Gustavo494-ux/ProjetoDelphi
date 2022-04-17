@@ -9,6 +9,7 @@ inherited frmCadCategoria: TfrmCadCategoria
   inherited pgcPrincipal: TPageControl
     Width = 751
     Height = 317
+    ActivePage = TabManutencao
     ExplicitWidth = 751
     ExplicitHeight = 317
     inherited tabListagem: TTabSheet
@@ -39,6 +40,29 @@ inherited frmCadCategoria: TfrmCadCategoria
     inherited TabManutencao: TTabSheet
       ExplicitWidth = 743
       ExplicitHeight = 289
+      object edtCategoriaId: TLabeledEdit
+        Left = 40
+        Top = 48
+        Width = 121
+        Height = 21
+        EditLabel.Width = 33
+        EditLabel.Height = 13
+        EditLabel.Caption = 'C'#243'digo'
+        MaxLength = 10
+        NumbersOnly = True
+        TabOrder = 0
+      end
+      object edtDescricao: TLabeledEdit
+        Left = 40
+        Top = 88
+        Width = 281
+        Height = 21
+        EditLabel.Width = 42
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Desci'#231#227'o'
+        MaxLength = 100
+        TabOrder = 1
+      end
     end
   end
   inherited pnlRodaPe: TPanel
@@ -48,10 +72,8 @@ inherited frmCadCategoria: TfrmCadCategoria
     ExplicitWidth = 751
     inherited btnNavigator: TDBNavigator
       Left = 441
-      Top = 10
       Hints.Strings = ()
       ExplicitLeft = 441
-      ExplicitTop = 10
     end
     inherited btnFechar: TBitBtn
       Left = 667

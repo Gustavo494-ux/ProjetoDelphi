@@ -12,7 +12,10 @@ type
   TfrmCadCategoria = class(TfrmTelaHeranca)
     QryListagemcategoriaId: TIntegerField;
     QryListagemDescricao: TWideStringField;
+    edtCategoriaId: TLabeledEdit;
+    edtDescricao: TLabeledEdit;
     procedure FormCreate(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -27,7 +30,20 @@ implementation
 {$R *.dfm}
 
 {$region 'Eventos do Formulario'}
-  procedure TfrmCadCategoria.FormCreate(Sender: TObject);
+  procedure TfrmCadCategoria.btnGravarClick(Sender: TObject);
+  begin
+    if(edtDescricao.Text = EmptyStr) then
+    begin
+      showMessage('Campo Obrigatorio');
+      edtDescricao.SetFocus;
+      abort;
+    end;
+
+    inherited;
+
+  end;
+
+procedure TfrmCadCategoria.FormCreate(Sender: TObject);
     begin
       inherited;
       IndiceAtual := 'descricao';

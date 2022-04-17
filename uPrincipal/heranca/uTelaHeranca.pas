@@ -169,22 +169,11 @@ implementation
          qryListagem.Open;
        end;
 
+       ControlarIndiceTab(pgcPrincipal, 0);
        ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,
                       btnDeletar,btnNavigator,pgcPrincipal,true);
     end;
 
-procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
-    begin
-      IndiceAtual := Column.FieldName;
-      qryListagem.IndexFieldNames := IndiceAtual;
-      ExibirLabelIndice(IndiceAtual,Lbl_Indice);
-
-    end;
-
-    procedure TfrmTelaHeranca.mskEditChange(Sender: TObject);
-    begin
-      QryListagem.Locate(IndiceAtual, TmaskEdit(Sender).Text,[loPartialKey]);
-    end;
   {$endRegion}
 
 
@@ -245,5 +234,20 @@ procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
     begin
        Close;
     end;
+
+    procedure TfrmTelaHeranca.grdListagemTitleClick(Column: TColumn);
+    begin
+      IndiceAtual := Column.FieldName;
+      qryListagem.IndexFieldNames := IndiceAtual;
+      ExibirLabelIndice(IndiceAtual,Lbl_Indice);
+
+    end;
+
+    procedure TfrmTelaHeranca.mskEditChange(Sender: TObject);
+    begin
+      QryListagem.Locate(IndiceAtual, TmaskEdit(Sender).Text,[loPartialKey]);
+    end;
+
   {$endRegion}
+
 end.

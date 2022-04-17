@@ -92,8 +92,6 @@ object frmTelaHeranca: TfrmTelaHeranca
     Height = 49
     Align = alBottom
     TabOrder = 1
-    ExplicitLeft = -248
-    ExplicitTop = 568
     object btnNovo: TBitBtn
       Left = 20
       Top = 10
