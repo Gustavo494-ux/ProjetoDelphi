@@ -53,13 +53,14 @@ inherited frmCadCategoria: TfrmCadCategoria
         TabOrder = 0
       end
       object edtDescricao: TLabeledEdit
+        Tag = 1
         Left = 40
         Top = 88
         Width = 281
         Height = 21
-        EditLabel.Width = 42
+        EditLabel.Width = 46
         EditLabel.Height = 13
-        EditLabel.Caption = 'Desci'#231#227'o'
+        EditLabel.Caption = 'Descri'#231#227'o'
         MaxLength = 100
         TabOrder = 1
       end

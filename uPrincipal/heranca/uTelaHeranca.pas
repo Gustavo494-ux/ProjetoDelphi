@@ -55,11 +55,14 @@ type
 
 
 
+
   public
     { Public declarations }
     IndiceAtual : string;
 
     procedure ExibirLabelIndice(Campo: string; aLabel: Tlabel);
+
+    function ExisteCampoObrigatorio: Boolean;
 
     function Gravar(EstadoDoCadastro:TEstadoDoCadastro): boolean; virtual;
     function Listar: boolean; virtual;
@@ -113,6 +116,29 @@ implementation
     begin
        if pgcPrincipal.Pages[index].TabVisible then
         pgcPrincipal.TabIndex := 0
+    end;
+
+    function TfrmTelaHeranca.ExisteCampoObrigatorio:Boolean;
+    var i:integer;
+    begin
+     Result:= False;
+     for I := 0 to ComponentCount -1 do
+     begin
+      If(Components[i] is TLabeledEdit) then
+      begin
+        if(TLabeledEdit(Components[i]).Tag = 1) AND
+          (TLabeledEdit(Components[i]).Text = EmptyStr) then
+          begin
+            MessageDlg((TLabeledEdit(Components[i]).EditLabel.Caption +
+            ' é um campo obrigatório'),TMsgDlgType.mtInformation,[mbOk],0);
+
+            TLabeledEdit(Components[i]).SetFocus;
+            Result := True;
+            Break;
+          end;
+      end;
+     end;
+
     end;
   {$endRegion}
 
@@ -176,18 +202,18 @@ implementation
 
   {$endRegion}
 
-
   {$region 'Eventos Click Dos Componentes'}
 
     procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
     begin
-      ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
-      btnNavigator,pgcPrincipal,false);
-      EstadoDoCadastro := ecInserir;
+        ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
+        btnNavigator,pgcPrincipal,false);
+        EstadoDoCadastro := ecInserir;
     End;
 
     procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
     begin
+      if(ExisteCampoObrigatorio) then abort;
       try
         if Gravar(EstadoDoCadastro) then
         begin
