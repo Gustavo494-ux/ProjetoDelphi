@@ -89,11 +89,4 @@ uses uDTMConexao, uCadCategoria;
     frmCadCategoria.Release;
   end;
 
-
-
-
-
-
-
-
 end.
