@@ -18,6 +18,7 @@ type
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnGravarClick(Sender: TObject);
   private
     { Private declarations }
     oCategoria :TCategoria;
@@ -32,8 +33,24 @@ implementation
 
 {$R *.dfm}
 
+{$Region 'Crud'}
+
+procedure TfrmCadCategoria.btnGravarClick(Sender: TObject);
+begin
+  edtCategoriaId.Text := '0';
+  //Para não dar erro ao gravar o edtCategoriaId precisar ter um valor inteiro.
+
+  oCategoria.codigo := strToInt(edtCategoriaId.Text);
+  oCategoria.descricao := edtDescricao.Text;
+
+  inherited;
+end;
+
+{$endRegion}
+
 {$region 'Eventos do Formulario'}
-  procedure TfrmCadCategoria.FormClose(Sender: TObject; var Action: TCloseAction);
+
+procedure TfrmCadCategoria.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
 
