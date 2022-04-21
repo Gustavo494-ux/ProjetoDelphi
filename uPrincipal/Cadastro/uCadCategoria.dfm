@@ -74,10 +74,22 @@ inherited frmCadCategoria: TfrmCadCategoria
     ExplicitLeft = 0
     ExplicitTop = 317
     ExplicitWidth = 751
+    inherited btnNovo: TBitBtn
+      Left = 18
+      ExplicitLeft = 18
+    end
+    inherited btnAlterar: TBitBtn
+      Left = 182
+      ExplicitLeft = 182
+    end
     inherited btnNavigator: TDBNavigator
       Left = 441
       Hints.Strings = ()
       ExplicitLeft = 441
+    end
+    inherited btnGravar: TBitBtn
+      Left = 100
+      ExplicitLeft = 100
     end
     inherited btnFechar: TBitBtn
       Left = 667

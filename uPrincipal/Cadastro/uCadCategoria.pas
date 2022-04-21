@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, Vcl.DBCtrls, Vcl.Grids,
   Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask, Vcl.ExtCtrls, Vcl.ComCtrls,
-  cCadCategoria;
+  cCadCategoria,uDTMConexao, uEnum;
 
 type
     TfrmCadCategoria = class(TfrmTelaHeranca)
@@ -19,9 +19,15 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnGravarClick(Sender: TObject);
+    procedure btnDeletarClick(Sender: TObject);
+
   private
     { Private declarations }
     oCategoria :TCategoria;
+
+    function Gravar(EstadoDoCadastro:TEstadoDoCadastro): boolean; override;
+    function Apagar: boolean; override;
+
     public
     { Public declarations }
   end;
@@ -33,21 +39,6 @@ implementation
 
 {$R *.dfm}
 
-{$Region 'Crud'}
-
-procedure TfrmCadCategoria.btnGravarClick(Sender: TObject);
-begin
-  edtCategoriaId.Text := '0';
-  //Para não dar erro ao gravar o edtCategoriaId precisar ter um valor inteiro.
-
-  oCategoria.codigo := strToInt(edtCategoriaId.Text);
-  oCategoria.descricao := edtDescricao.Text;
-
-  inherited;
-end;
-
-{$endRegion}
-
 {$region 'Eventos do Formulario'}
 
 procedure TfrmCadCategoria.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -58,15 +49,44 @@ begin
     FreeAndNil(oCategoria);
 end;
 
-  procedure TfrmCadCategoria.FormCreate(Sender: TObject);
-    begin
-      inherited;
-      oCategoria := TCategoria.Create;
-      IndiceAtual := 'descricao';
-    end;
+procedure TfrmCadCategoria.FormCreate(Sender: TObject);
+  begin
+    inherited;
+    oCategoria := TCategoria.Create(dtmPrincipal.conexaoDB);
+    IndiceAtual := 'descricao';
+  end;
+
 {$endRegion}
 
-{$region 'Eventos Gerais'}
+{$Region 'Métodos Crud'}
+//Override
+function TfrmCadCategoria.Apagar: boolean;
+begin
+  Result := oCategoria.Apagar;
+end;
+
+function TfrmCadCategoria.Gravar(EstadoDoCadastro: TEstadoDoCadastro):boolean;
+begin
+ if (EstadoDoCadastro = ecInserir) then
+    Result:=  oCategoria.Gravar
+  else if (EstadoDoCadastro = ecAlterar) then
+    Result:= oCategoria.Atualizar;
+end;
+
+{$endRegion}
+
+{$region 'Eventos CRUD'}
+procedure TfrmCadCategoria.btnDeletarClick(Sender: TObject);
+begin
+  inherited;
+//    oCategoria.Apagar;
+end;
+
+procedure TfrmCadCategoria.btnGravarClick(Sender: TObject);
+begin
+
+  inherited;
+end;
 {$endregion}
 
 

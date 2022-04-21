@@ -55,10 +55,6 @@ type
     procedure LimparEdit;
 
 
-
-
-
-
   public
     { Public declarations }
     IndiceAtual : string;
@@ -69,7 +65,7 @@ type
 
     function Gravar(EstadoDoCadastro:TEstadoDoCadastro): boolean; virtual;
     function Listar: boolean; virtual;
-    function Excluir: boolean; virtual;
+    function Apagar: boolean; virtual;
   end;
 
 var
@@ -103,11 +99,11 @@ implementation
     Result:= True;
   end;
 
-  function TfrmTelaHeranca.Excluir: boolean;
-  begin
+  function TfrmTelaHeranca.Apagar: boolean;
+   begin
     ShowMessage('Registro Deletado');
-    Result:= True;
-  end;
+    Result := True;
+   end;
 {$endregion}
 
 {$region 'Funções e Prodecures'}
@@ -292,7 +288,7 @@ implementation
   procedure TfrmTelaHeranca.btnDeletarClick(Sender: TObject);
   begin
       try
-         if Excluir then
+         if Apagar then
           begin
             ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
             btnNavigator,pgcPrincipal,true);
