@@ -52,6 +52,7 @@ type
     procedure ControlarIndiceTab(pgcPrincipal: TPageControl; index: integer);
     function RetornarCampoTraduzido(Campo: string): string;
     procedure DesabilitarEditPk;
+    procedure LimparEdit;
 
 
 
@@ -124,6 +125,28 @@ implementation
       end;
     end;
 
+  function TfrmTelaHeranca.ExisteCampoObrigatorio:Boolean;
+  var i:integer;
+  begin
+   Result:= False;
+   for I := 0 to ComponentCount -1 do
+   begin
+    If(Components[i] is TLabeledEdit) then
+    begin
+      if(TLabeledEdit(Components[i]).Tag = 2) AND
+        (TLabeledEdit(Components[i]).Text = EmptyStr) then
+        begin
+          MessageDlg((TLabeledEdit(Components[i]).EditLabel.Caption +
+          ' é um campo obrigatório'),TMsgDlgType.mtInformation,[mbOk],0);
+
+          TLabeledEdit(Components[i]).SetFocus;
+          Result := True;
+          Break;
+        end;
+    end;
+   end;
+  end;
+
   procedure TfrmTelaHeranca.ControlarBotoes(btnNovo, btnAlterar,btnCancelar,
    btnGravar, btnDeletar  : TBitBtn; btnNavigator:TDBNavigator;
    pgcPrincipal:TPageControl;Flag:boolean);
@@ -150,29 +173,6 @@ implementation
       pgcPrincipal.TabIndex := 0
   end;
 
-  function TfrmTelaHeranca.ExisteCampoObrigatorio:Boolean;
-  var i:integer;
-  begin
-   Result:= False;
-   for I := 0 to ComponentCount -1 do
-   begin
-    If(Components[i] is TLabeledEdit) then
-    begin
-      if(TLabeledEdit(Components[i]).Tag = 2) AND
-        (TLabeledEdit(Components[i]).Text = EmptyStr) then
-        begin
-          MessageDlg((TLabeledEdit(Components[i]).EditLabel.Caption +
-          ' é um campo obrigatório'),TMsgDlgType.mtInformation,[mbOk],0);
-
-          TLabeledEdit(Components[i]).SetFocus;
-          Result := True;
-          Break;
-        end;
-    end;
-   end;
-
-  end;
-
   procedure TfrmTelaHeranca.DesabilitarEditPk;
   var i:integer;
   begin
@@ -186,6 +186,16 @@ implementation
            break;
         end;
       end;
+     end;
+  end;
+
+  procedure TfrmTelaHeranca.LimparEdit;
+  var i:integer;
+  begin
+     for I := 0 to ComponentCount -1 do
+     begin
+      If(Components[i] is TLabeledEdit) then
+           TLabeledEdit(Components[i]).Text := EmptyStr;
      end;
   end;
 
@@ -233,9 +243,11 @@ implementation
 
   procedure TfrmTelaHeranca.btnNovoClick(Sender: TObject);
   begin
+
       ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
       btnNavigator,pgcPrincipal,false);
       EstadoDoCadastro := ecInserir;
+      LimparEdit;
   End;
 
   procedure TfrmTelaHeranca.btnGravarClick(Sender: TObject);
@@ -247,7 +259,8 @@ implementation
         ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
         btnNavigator,pgcPrincipal,true);
         ControlarIndiceTab(pgcPrincipal,0);
-              EstadoDoCadastro := ecNenhum;
+        EstadoDoCadastro := ecNenhum;
+        LimparEdit;
       end
       else begin
         MessageDlg('Erro na Gravação', mtError,[mbok],0);
@@ -263,6 +276,7 @@ implementation
    ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
       btnNavigator,pgcPrincipal,false);
       EstadoDoCadastro := ecAlterar;
+      LimparEdit;
   end;
 
   procedure TfrmTelaHeranca.btnCancelarClick(Sender: TObject);
@@ -272,6 +286,7 @@ implementation
 
     ControlarIndiceTab(pgcPrincipal,0);
     EstadoDoCadastro := ecNenhum;
+    LimparEdit;
   end;
 
   procedure TfrmTelaHeranca.btnDeletarClick(Sender: TObject);
@@ -282,7 +297,7 @@ implementation
             ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
             btnNavigator,pgcPrincipal,true);
             ControlarIndiceTab(pgcPrincipal,0);
-
+            LimparEdit;
           end
           else begin
             MessageDlg('Erro na Exclução', mtError,[mbok],0);
