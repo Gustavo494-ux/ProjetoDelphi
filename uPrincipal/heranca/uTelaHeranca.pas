@@ -255,8 +255,9 @@ implementation
         ControlarBotoes(btnNovo,btnAlterar,btnCancelar,btnGravar,btnDeletar,
         btnNavigator,pgcPrincipal,true);
         ControlarIndiceTab(pgcPrincipal,0);
-        EstadoDoCadastro := ecNenhum;
+         EstadoDoCadastro := ecNenhum;
         LimparEdit;
+        QryListagem.Refresh;
       end
       else begin
         MessageDlg('Erro na Gravação', mtError,[mbok],0);
@@ -283,6 +284,7 @@ implementation
     ControlarIndiceTab(pgcPrincipal,0);
     EstadoDoCadastro := ecNenhum;
     LimparEdit;
+    QryListagem.Refresh;
   end;
 
   procedure TfrmTelaHeranca.btnDeletarClick(Sender: TObject);
@@ -294,6 +296,7 @@ implementation
             btnNavigator,pgcPrincipal,true);
             ControlarIndiceTab(pgcPrincipal,0);
             LimparEdit;
+            QryListagem.Refresh;
           end
           else begin
             MessageDlg('Erro na Exclução', mtError,[mbok],0);

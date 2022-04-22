@@ -5,11 +5,12 @@ interface
 {$region 'Uses'}
 uses
   System.Classes,
+  System.SysUtils,
   Vcl.Controls,
   Vcl.ExtCtrls,
   Vcl.Dialogs,
-  ZAbstractConnection,
-  ZConnection;
+  ZAbstractConnection,ZConnection,
+  ZAbstractRODataset,ZAbstractDataset,Zdataset;
 
 
 {$endRegion}
@@ -29,7 +30,7 @@ type
   public
     Constructor Create(aConexao:TZConnection);
     destructor destroy; override;
-    function Gravar:Boolean;
+    function Inserir:Boolean;
     function Atualizar:Boolean;
     function Apagar:Boolean;
     function Selecionar(id:Integer):boolean;
@@ -99,10 +100,27 @@ begin
    Result := True;
 end;
 
-function TCategoria.Gravar: Boolean;
+function TCategoria.Inserir: Boolean;
+var Q : TZQuery;
 begin
-  ShowMessage('Registro Salvo');
-  Result := True;
+  try
+    Result:= true;
+    Q := TZQuery.Create(nil);
+    Q.Connection := ConexaoDB;
+
+    Q.SQL.Add('INSERT INTO categorias(descricao) VALUES (:descricao);');
+
+    Q.ParamByName('descricao').Value := self.F_descricao;
+
+    try
+    Q.ExecSQL;
+    Except
+    Result := false;
+    end;
+  finally
+    if Assigned(Q) then
+      FreeAndNil(Q);
+  end;
 end;
 
 function TCategoria.Selecionar(id: Integer): boolean;

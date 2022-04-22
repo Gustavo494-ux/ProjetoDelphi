@@ -67,8 +67,15 @@ end;
 
 function TfrmCadCategoria.Gravar(EstadoDoCadastro: TEstadoDoCadastro):boolean;
 begin
+  if edtCategoriaId.Text <> EmptyStr then
+    oCategoria.codigo := strToInt(edtCategoriaId.Text)
+  else
+    oCategoria.codigo := 0;
+
+  oCategoria.descricao := edtDescricao.Text;
+
  if (EstadoDoCadastro = ecInserir) then
-    Result:=  oCategoria.Gravar
+    Result:=  oCategoria.Inserir
   else if (EstadoDoCadastro = ecAlterar) then
     Result:= oCategoria.Atualizar;
 end;
