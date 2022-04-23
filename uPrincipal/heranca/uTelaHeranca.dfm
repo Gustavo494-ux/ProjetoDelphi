@@ -5,8 +5,8 @@ object frmTelaHeranca: TfrmTelaHeranca
   AlphaBlend = True
   BorderStyle = bsDialog
   Caption = 'Informe Aqui o Titulo'
-  ClientHeight = 641
-  ClientWidth = 1070
+  ClientHeight = 616
+  ClientWidth = 1101
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,20 +23,23 @@ object frmTelaHeranca: TfrmTelaHeranca
   object pgcPrincipal: TPageControl
     Left = 0
     Top = 0
-    Width = 1070
-    Height = 592
+    Width = 1101
+    Height = 567
     ActivePage = tabListagem
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 1070
+    ExplicitHeight = 592
     object tabListagem: TTabSheet
       Caption = 'Listagem'
       object pnlListagemTopo: TPanel
         Left = 0
         Top = 0
-        Width = 1062
+        Width = 1093
         Height = 57
         Align = alTop
         TabOrder = 0
+        ExplicitWidth = 1062
         object Lbl_Indice: TLabel
           Left = 16
           Top = 3
@@ -94,8 +97,8 @@ object frmTelaHeranca: TfrmTelaHeranca
       object grdListagem: TDBGrid
         Left = 0
         Top = 57
-        Width = 1062
-        Height = 507
+        Width = 1093
+        Height = 482
         Align = alClient
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
         TabOrder = 1
@@ -115,11 +118,16 @@ object frmTelaHeranca: TfrmTelaHeranca
   end
   object pnlRodaPe: TPanel
     Left = 0
-    Top = 592
-    Width = 1070
+    Top = 567
+    Width = 1101
     Height = 49
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 592
+    ExplicitWidth = 1070
+    DesignSize = (
+      1101
+      49)
     object btnNovo: TBitBtn
       Left = 20
       Top = 10
@@ -310,10 +318,11 @@ object frmTelaHeranca: TfrmTelaHeranca
       OnClick = btnDeletarClick
     end
     object btnFechar: TBitBtn
-      Left = 986
+      Left = 1017
       Top = 10
       Width = 75
       Height = 25
+      Anchors = [akRight, akBottom]
       Caption = '&Fechar'
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -344,6 +353,7 @@ object frmTelaHeranca: TfrmTelaHeranca
         4E6E244E6E244E6E244E6E244E6E244E6E244E6E244E6EFF00FF}
       TabOrder = 6
       OnClick = btnFecharClick
+      ExplicitLeft = 986
     end
   end
   object QryListagem: TZQuery
