@@ -20,6 +20,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnGravarClick(Sender: TObject);
     procedure btnDeletarClick(Sender: TObject);
+    procedure btnAlterarClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -83,6 +84,23 @@ end;
 {$endRegion}
 
 {$region 'Eventos CRUD'}
+procedure TfrmCadCategoria.btnAlterarClick(Sender: TObject);
+begin
+    inherited;
+
+  if oCategoria.Selecionar(QryListagem.FieldByName('categoriaId').AsInteger) then
+  begin
+   edtCategoriaId.Text := intToStr(oCategoria.codigo) ;
+   edtDescricao.Text := oCategoria.descricao;
+  end
+  else
+  begin
+   btnCancelar.Click;
+   Abort;
+  end;
+
+end;
+
 procedure TfrmCadCategoria.btnDeletarClick(Sender: TObject);
 begin
   inherited;

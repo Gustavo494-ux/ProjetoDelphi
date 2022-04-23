@@ -72,11 +72,11 @@ inherited frmCadCategoria: TfrmCadCategoria
     Top = 317
     Width = 751
     ExplicitLeft = 0
-    ExplicitTop = 317
+    ExplicitTop = 319
     ExplicitWidth = 751
     inherited btnNovo: TBitBtn
-      Left = 18
-      ExplicitLeft = 18
+      Left = 17
+      ExplicitLeft = 17
     end
     inherited btnAlterar: TBitBtn
       Left = 182
@@ -88,8 +88,8 @@ inherited frmCadCategoria: TfrmCadCategoria
       ExplicitLeft = 441
     end
     inherited btnGravar: TBitBtn
-      Left = 100
-      ExplicitLeft = 100
+      Left = 99
+      ExplicitLeft = 99
     end
     inherited btnFechar: TBitBtn
       Left = 667

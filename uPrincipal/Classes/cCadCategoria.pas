@@ -110,7 +110,7 @@ begin
 
     Q.SQL.Add('INSERT INTO categorias(descricao) VALUES (:descricao);');
 
-    Q.ParamByName('descricao').Value := self.F_descricao;
+    Q.ParamByName('descricao').AsString := self.F_descricao;
 
     try
     Q.ExecSQL;
@@ -124,9 +124,30 @@ begin
 end;
 
 function TCategoria.Selecionar(id: Integer): boolean;
+Var Q:TZQuery;
 begin
-  ShowMessage('Registro Listado');
-  Result := True;
+  try
+    Result:= true;
+    Q := TZQuery.Create(nil);
+    Q.Connection := ConexaoDB;
+    Q.SQL.Clear;
+    Q.sql.Add('SELECT categoriaId,descricao FROM categorias '+
+    ' WHERE categoriaId = :categoriaId');
+    Q.ParamByName('categoriaId').AsInteger := id;
+    try
+      Q.Open;
+
+      self.F_categoriaId := Q.FieldByName('categoriaId').AsInteger;
+      self.F_descricao := Q.FieldByName('descricao').AsString;
+    Except
+     Result:= true;
+    end;
+
+  finally
+    if Assigned(Q) then
+      FreeAndNil(Q);
+
+  end;
 end;
 
 {$endRegion}
