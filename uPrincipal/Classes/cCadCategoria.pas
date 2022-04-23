@@ -32,7 +32,7 @@ type
     destructor destroy; override;
     function Inserir:Boolean;
     function Atualizar:Boolean;
-    function Apagar:Boolean;
+    function Apagar(id :integer):Boolean;
     function Selecionar(id:Integer):boolean;
 
 
@@ -88,16 +88,54 @@ end;
 
 {$Region 'Métodos CRUDs'}
 
-function TCategoria.Apagar: Boolean;
+function TCategoria.Apagar(id :integer):Boolean;
 begin
-   ShowMessage('Registro Apagado');
-   Result := True;
+  var Q : TZQuery;
+begin
+  try
+    Result:= true;
+    Q := TZQuery.Create(nil);
+    Q.Connection := ConexaoDB;
+
+    Q.SQL.Add('DELETE FROM categorias WHERE categoriaId = :categoriaId');
+
+    Q.ParamByName('categoriaId').AsInteger := id;
+
+    try
+      Q.ExecSQL;
+    Except
+      Result := false;
+    end;
+  finally
+    if Assigned(Q) then
+      FreeAndNil(Q);
+  end;
+end;
 end;
 
 function TCategoria.Atualizar: Boolean;
+var Q : TZQuery;
 begin
-   ShowMessage('Registro Atualizado');
-   Result := True;
+  try
+    Result:= true;
+    Q := TZQuery.Create(nil);
+    Q.Connection := ConexaoDB;
+
+    Q.SQL.Add('UPDATE categorias SET descricao = :descricao ' +
+    ' WHERE categoriaId = :categoriaId');
+
+    Q.ParamByName('categoriaId').AsInteger := self.F_categoriaId;
+    Q.ParamByName('descricao').AsString := self.F_descricao;
+
+    try
+      Q.ExecSQL;
+    Except
+      Result := false;
+    end;
+  finally
+    if Assigned(Q) then
+      FreeAndNil(Q);
+  end;
 end;
 
 function TCategoria.Inserir: Boolean;
@@ -113,9 +151,9 @@ begin
     Q.ParamByName('descricao').AsString := self.F_descricao;
 
     try
-    Q.ExecSQL;
+      Q.ExecSQL;
     Except
-    Result := false;
+      Result := false;
     end;
   finally
     if Assigned(Q) then
@@ -133,6 +171,7 @@ begin
     Q.SQL.Clear;
     Q.sql.Add('SELECT categoriaId,descricao FROM categorias '+
     ' WHERE categoriaId = :categoriaId');
+
     Q.ParamByName('categoriaId').AsInteger := id;
     try
       Q.Open;

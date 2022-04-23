@@ -18,9 +18,8 @@ type
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure btnGravarClick(Sender: TObject);
-    procedure btnDeletarClick(Sender: TObject);
     procedure btnAlterarClick(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -54,7 +53,7 @@ procedure TfrmCadCategoria.FormCreate(Sender: TObject);
   begin
     inherited;
     oCategoria := TCategoria.Create(dtmPrincipal.conexaoDB);
-    IndiceAtual := 'descricao';
+    IndiceAtual := 'categoriaid';
   end;
 
 {$endRegion}
@@ -62,8 +61,14 @@ procedure TfrmCadCategoria.FormCreate(Sender: TObject);
 {$Region 'Métodos Crud'}
 //Override
 function TfrmCadCategoria.Apagar: boolean;
+//var del: Integer;
 begin
-  Result := oCategoria.Apagar;
+  if MessageDlg('Tem certeza que deseja apagar permanemente essa categoria?',
+  mtConfirmation,[mbYes,mbNo],0) = mrYes then
+  begin
+    Result := oCategoria.Apagar(QryListagem.FieldByName('categoriaId').AsInteger);
+    ShowMessage('Categoria Apagada');
+  end else abort;
 end;
 
 function TfrmCadCategoria.Gravar(EstadoDoCadastro: TEstadoDoCadastro):boolean;
@@ -84,9 +89,10 @@ end;
 {$endRegion}
 
 {$region 'Eventos CRUD'}
+
 procedure TfrmCadCategoria.btnAlterarClick(Sender: TObject);
 begin
-    inherited;
+  inherited;
 
   if oCategoria.Selecionar(QryListagem.FieldByName('categoriaId').AsInteger) then
   begin
@@ -99,19 +105,15 @@ begin
    Abort;
   end;
 
+  edtDescricao.SetFocus;
 end;
 
-procedure TfrmCadCategoria.btnDeletarClick(Sender: TObject);
+procedure TfrmCadCategoria.btnNovoClick(Sender: TObject);
 begin
   inherited;
-//    oCategoria.Apagar;
+  edtDescricao.SetFocus;
 end;
 
-procedure TfrmCadCategoria.btnGravarClick(Sender: TObject);
-begin
-
-  inherited;
-end;
 {$endregion}
 
 

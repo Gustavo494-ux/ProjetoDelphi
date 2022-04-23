@@ -9,7 +9,6 @@ inherited frmCadCategoria: TfrmCadCategoria
   inherited pgcPrincipal: TPageControl
     Width = 751
     Height = 317
-    ActivePage = TabManutencao
     ExplicitWidth = 751
     ExplicitHeight = 317
     inherited tabListagem: TTabSheet
@@ -71,7 +70,6 @@ inherited frmCadCategoria: TfrmCadCategoria
   inherited pnlRodaPe: TPanel
     Top = 317
     Width = 751
-    ExplicitLeft = 0
     ExplicitTop = 319
     ExplicitWidth = 751
     inherited btnNovo: TBitBtn
@@ -102,7 +100,9 @@ inherited frmCadCategoria: TfrmCadCategoria
       'SELECT'
       '  categoriaId,'
       '  Descricao'
-      'FROM Categorias')
+      'FROM Categorias'
+      'ORDER BY'
+      'categoriaId asc')
     Left = 600
     object QryListagemcategoriaId: TIntegerField
       DisplayLabel = 'C'#243'digo'
