@@ -28,8 +28,6 @@ object frmTelaHeranca: TfrmTelaHeranca
     ActivePage = tabListagem
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 1070
-    ExplicitHeight = 592
     object tabListagem: TTabSheet
       Caption = 'Listagem'
       object pnlListagemTopo: TPanel
@@ -39,7 +37,6 @@ object frmTelaHeranca: TfrmTelaHeranca
         Height = 57
         Align = alTop
         TabOrder = 0
-        ExplicitWidth = 1062
         object Lbl_Indice: TLabel
           Left = 16
           Top = 3
@@ -123,8 +120,6 @@ object frmTelaHeranca: TfrmTelaHeranca
     Height = 49
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 592
-    ExplicitWidth = 1070
     DesignSize = (
       1101
       49)
@@ -353,7 +348,6 @@ object frmTelaHeranca: TfrmTelaHeranca
         4E6E244E6E244E6E244E6E244E6E244E6E244E6E244E6EFF00FF}
       TabOrder = 6
       OnClick = btnFecharClick
-      ExplicitLeft = 986
     end
   end
   object QryListagem: TZQuery

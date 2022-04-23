@@ -23,13 +23,14 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Cadastro'
       object CadastroCliente: TMenuItem
         Caption = 'Cliente'
+        OnClick = CadastroClienteClick
       end
       object LinhaCadastro1: TMenuItem
         Caption = '-'
       end
-      object RelatorioVendaPorData: TMenuItem
+      object CadastroCategoria: TMenuItem
         Caption = 'Categoria'
-        OnClick = RelatorioVendaPorDataClick
+        OnClick = CadastroCategoriaClick
       end
       object CadastroProduto: TMenuItem
         Caption = 'Produto'

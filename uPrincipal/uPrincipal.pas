@@ -15,7 +15,7 @@ type
     menuRelatrios: TMenuItem;
     CadastroCliente: TMenuItem;
     LinhaCadastro1: TMenuItem;
-    RelatorioVendaPorData: TMenuItem;
+    CadastroCategoria: TMenuItem;
     LinhaCadastro2: TMenuItem;
     CadastroProduto: TMenuItem;
     FecharAplicacao: TMenuItem;
@@ -27,8 +27,9 @@ type
     VendaPorData1: TMenuItem;
     procedure FecharAplicacaoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure RelatorioVendaPorDataClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure CadastroClienteClick(Sender: TObject);
+    procedure CadastroCategoriaClick(Sender: TObject);
   private
     { Private declarations }
     TeclaEnter: TMREnter;
@@ -43,50 +44,65 @@ implementation
 
 {$R *.dfm}
 
-uses uDTMConexao, uCadCategoria;
+uses uDTMConexao, uCadCategoria,uCadCliente;
 
-  procedure TfrmPrincipal.FormCreate(Sender: TObject);
+{$Region 'Eventos Formulario'}
+
+procedure TfrmPrincipal.FormCreate(Sender: TObject);
+begin
+  dtmPrincipal  := TdtmPrincipal.Create(self);
+
+  with dtmPrincipal.ConexaoDB do
   begin
-    dtmPrincipal  := TdtmPrincipal.Create(self);
-
-    with dtmPrincipal.ConexaoDB do
-    begin
-      SQLHourGlass := false;
-      Protocol := 'mssql';
-      LibraryLocation := 'F:\Projetos\Delphi\delphi_e_sql-server_na_pratica\ProjetoDelphi\dll\ntwdblib.dll';
-      HostName := '.\SHOPCONTROL9';
-      Port := 1433;
-      User := 'sa';
-      Password := 'Senha123';
-      Database := 'vendas';
-      Connected := True;
-
-    end;
-
-    TeclaEnter := TMREnter.Create(self);
-    TeclaEnter.FocusEnabled := true;
-    TeclaEnter.FocusColor := clInfoBk;
-
+    SQLHourGlass := false;
+    Protocol := 'mssql';
+    LibraryLocation := 'F:\Projetos\Delphi\delphi_e_sql-server_na_pratica\ProjetoDelphi\dll\ntwdblib.dll';
+    HostName := '.\SHOPCONTROL9';
+    Port := 1433;
+    User := 'sa';
+    Password := 'Senha123';
+    Database := 'vendas';
+    Connected := True;
 
   end;
 
-  procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
-  begin
-    FreeAndNil(TeclaEnter);
-    FreeAndNil(dtmPrincipal);
-  end;
+  TeclaEnter := TMREnter.Create(self);
+  TeclaEnter.FocusEnabled := true;
+  TeclaEnter.FocusColor := clInfoBk;
 
-  procedure TfrmPrincipal.FecharAplicacaoClick(Sender: TObject);
-  begin
 
-    Application.Terminate;
-  end;
+end;
 
-  procedure TfrmPrincipal.RelatorioVendaPorDataClick(Sender: TObject);
-  begin
-    frmCadCategoria := TfrmCadCategoria.Create(self);
-    frmCadCategoria.ShowModal;
-    frmCadCategoria.Release;
-  end;
+procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FreeAndNil(TeclaEnter);
+  FreeAndNil(dtmPrincipal);
+end;
+
+{$endRegion}
+
+
+{$Region 'Eventos Menu'}
+
+procedure TfrmPrincipal.CadastroCategoriaClick(Sender: TObject);
+begin
+  frmCadCategoria := TfrmCadCategoria.Create(self);
+  frmCadCategoria.ShowModal;
+  frmCadCategoria.Release;
+end;
+
+procedure TfrmPrincipal.CadastroClienteClick(Sender: TObject);
+begin
+  FrmCadCliente := TFrmCadCliente.Create(self);
+  FrmCadCliente.ShowModal;
+  FrmCadCliente.Release;
+end;
+
+procedure TfrmPrincipal.FecharAplicacaoClick(Sender: TObject);
+begin
+
+  Application.Terminate;
+end;
+{$endRegion}
 
 end.
