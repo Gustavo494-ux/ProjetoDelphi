@@ -9,7 +9,6 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pgcPrincipal: TPageControl
     Width = 770
     Height = 401
-    ExplicitTop = 4
     ExplicitWidth = 770
     ExplicitHeight = 401
     inherited tabListagem: TTabSheet
@@ -25,48 +24,28 @@ inherited frmCadCliente: TfrmCadCliente
         DataSource = dtsListagem
         Columns = <
           item
+            Alignment = taCenter
             Expanded = False
             FieldName = 'clienteId'
+            Width = 45
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'nome'
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'endereco'
+            Width = 413
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'cidade'
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'bairro'
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'cep'
+            Width = 200
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'telefone'
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'email'
-            Visible = True
-          end
-          item
-            Expanded = False
-            FieldName = 'dataNascimento'
+            Width = 85
             Visible = True
           end>
       end
@@ -240,8 +219,7 @@ inherited frmCadCliente: TfrmCadCliente
   inherited pnlRodaPe: TPanel
     Top = 401
     Width = 770
-    ExplicitLeft = 8
-    ExplicitTop = 403
+    ExplicitTop = 401
     ExplicitWidth = 770
     inherited btnNovo: TBitBtn
       Left = 12
@@ -277,8 +255,7 @@ inherited frmCadCliente: TfrmCadCliente
       #9'email,'
       #9'dataNascimento'
       'from clientes')
-    Left = 552
-    Top = 32
+    Left = 664
     object QryListagemclienteId: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'clienteId'
@@ -289,46 +266,19 @@ inherited frmCadCliente: TfrmCadCliente
       FieldName = 'nome'
       Size = 60
     end
-    object QryListagemendereco: TWideStringField
-      DisplayLabel = 'Endere'#231'o'
-      FieldName = 'endereco'
-      Size = 60
+    object QryListagemtelefone: TWideStringField
+      DisplayLabel = 'Telefone'
+      FieldName = 'telefone'
+      Size = 16
     end
     object QryListagemcidade: TWideStringField
       DisplayLabel = 'Cidade'
       FieldName = 'cidade'
       Size = 50
     end
-    object QryListagembairro: TWideStringField
-      DisplayLabel = 'Bairro'
-      FieldName = 'bairro'
-      Size = 40
-    end
-    object QryListagemestado: TWideStringField
-      DisplayLabel = 'UF'
-      FieldName = 'estado'
-      Size = 2
-    end
-    object QryListagemcep: TWideStringField
-      DisplayLabel = 'CEP'
-      FieldName = 'cep'
-      Size = 10
-    end
-    object QryListagemtelefone: TWideStringField
-      FieldName = 'telefone'
-      Size = 14
-    end
-    object QryListagememail: TWideStringField
-      DisplayLabel = 'Email'
-      FieldName = 'email'
-      Size = 100
-    end
-    object QryListagemdataNascimento: TDateTimeField
-      DisplayLabel = 'Data de Nascimento'
-      FieldName = 'dataNascimento'
-    end
   end
   inherited dtsListagem: TDataSource
-    Left = 596
+    Left = 628
+    Top = 16
   end
 end

@@ -23,17 +23,11 @@ type
     lblTelefone: TLabel;
     edtData: TDateEdit;
     lblDataNascimento: TLabel;
+    cBoxUf: TComboBox;
     QryListagemclienteId: TIntegerField;
     QryListagemnome: TWideStringField;
-    QryListagemendereco: TWideStringField;
     QryListagemcidade: TWideStringField;
-    QryListagembairro: TWideStringField;
-    QryListagemcep: TWideStringField;
     QryListagemtelefone: TWideStringField;
-    QryListagememail: TWideStringField;
-    QryListagemdataNascimento: TDateTimeField;
-    cBoxUf: TComboBox;
-    QryListagemestado: TWideStringField;
     procedure FormCreate(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -42,6 +36,7 @@ type
   private
     { Private declarations }
     oCliente :TCliente;
+    Data_Atual : TDate;
 
     function Apagar:boolean; override;
     function Gravar(EstadoDoCadastro:TEstadoDoCadastro):boolean; Override;
@@ -61,11 +56,32 @@ uses uDTMConexao;
 
 { TfrmCadCliente }
 
-function TfrmCadCliente.Apagar: boolean;
-begin
-  if oCliente.Selecionar(QryListagem.FieldByName('clienteId').AsInteger) then
-      Result := oCliente.Apagar;
+{$Region 'Eventos do Formulario'}
 
+procedure TfrmCadCliente.FormCreate(Sender: TObject);
+begin
+  inherited;
+  oCliente := TCliente.Create(dtmPrincipal.conexaoDB);
+  IndiceAtual := 'clienteId';
+  Data_Atual := Date();
+end;
+
+procedure TfrmCadCliente.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  if Assigned(oCliente) then
+    FreeAndNil(oCliente);
+end;
+
+{$endRegion}
+
+{$Region 'Eventos CRUD''}
+
+procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
+begin
+  inherited;
+  edtNome.SetFocus;
+  edtData.Text := dateToStr(Data_Atual);
 end;
 
 procedure TfrmCadCliente.btnAlterarClick(Sender: TObject);
@@ -87,36 +103,9 @@ begin
   end;
 end;
 
-procedure TfrmCadCliente.btnNovoClick(Sender: TObject);
-begin
-  inherited;
-  edtNome.SetFocus;
-edtNome.Text := 'Gustavo Gama Dos Santos';
-  edtEndereco.Text := 'Rua Salustiano Nunes,N° 76';
-  edtBairro.Text := 'São João';
-  edtData.Text := '31/10/2001';
-  cBoxUf.Text := 'AL';
-  mEdtCep.Text := '57-320-000';
-  cboxUf.Text := 'AL';
-  edtCidade.Text := 'Craíbas';
-  edtEmail.Text := 'gustavogama494@gmail.com';
-//  mEdtTelefone.Text := '(82)99137-5483';
-end;
+{$endRegion}
 
-procedure TfrmCadCliente.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  inherited;
-  if Assigned(oCliente) then
-    FreeAndNil(oCliente);
-end;
-
-procedure TfrmCadCliente.FormCreate(Sender: TObject);
-begin
-  inherited;
-  oCliente := TCliente.Create(dtmPrincipal.conexaoDB);
-  IndiceAtual := 'clienteid';
-
-end;
+{$Region 'Métodos CRUD'}
 
 function TfrmCadCliente.Gravar(EstadoDoCadastro: TEstadoDoCadastro): boolean;
 begin
@@ -140,4 +129,12 @@ begin
     Result := oCliente.Atualizar;
 end;
 
+function TfrmCadCliente.Apagar: boolean;
+begin
+  if oCliente.Selecionar(QryListagem.FieldByName('clienteId').AsInteger) then
+      Result := oCliente.Apagar;
+
+end;
+
+{$endRegion}
 end.

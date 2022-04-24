@@ -30,7 +30,6 @@ type
     F_email :string;
     F_dataNascimento: TDateTime;
 
-    function DateToDateTime(Value :TDateTime):string;
 
   public
     constructor Create(aConexao:TZConnection);
@@ -112,6 +111,7 @@ var Q:TZQuery;
 begin
   try
     Result := true;
+    Q := TZQuery.Create(nil);
     Q.Connection := ConexaoDB;
     Q.SQL.Clear;
     Q.SQL.Add('UPDATE clientes SET ' +
@@ -145,7 +145,6 @@ begin
     if Assigned(Q) then
       FreeAndNil(Q);
   end;
-
 end;
 
 function TCliente.Inserir: Boolean;
@@ -209,22 +208,12 @@ begin
     Except
       Result := false;
     end;
-  finally
-    if Assigned(Q) then
-        FreeAndNil(Q)
-  end;
+    finally
+      if Assigned(Q) then
+          FreeAndNil(Q)
+    end;
 end;
 
 {$endRegion}
-
-function TCliente.DateToDateTime(Value :TDateTime):string;
-var
-  dia,mes,ano :word;
-  date_formatada :string;
-begin
-  DecodeDate(self.dataNascimento,ano,mes,dia);
-  date_formatada := intToStr(ano) + '-' +intToStr(mes) + '-' + intToStr(dia) + ' 00:00:00.000';
-  Result :=date_formatada;
-end;
 
 end.
