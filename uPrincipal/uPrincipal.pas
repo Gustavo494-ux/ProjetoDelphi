@@ -30,6 +30,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure CadastroClienteClick(Sender: TObject);
     procedure CadastroCategoriaClick(Sender: TObject);
+    procedure CadastroProdutoClick(Sender: TObject);
   private
     { Private declarations }
     TeclaEnter: TMREnter;
@@ -44,7 +45,7 @@ implementation
 
 {$R *.dfm}
 
-uses uDTMConexao, uCadCategoria,uCadCliente;
+uses uDTMConexao, uCadCategoria,uCadCliente, uCadProduto;
 
 {$Region 'Eventos Formulario'}
 
@@ -96,6 +97,13 @@ begin
   FrmCadCliente := TFrmCadCliente.Create(self);
   FrmCadCliente.ShowModal;
   FrmCadCliente.Release;
+end;
+
+procedure TfrmPrincipal.CadastroProdutoClick(Sender: TObject);
+begin
+  frmCadProduto := TfrmCadProduto.Create(self);
+  frmCadProduto.ShowModal;
+  frmCadProduto.Release;
 end;
 
 procedure TfrmPrincipal.FecharAplicacaoClick(Sender: TObject);

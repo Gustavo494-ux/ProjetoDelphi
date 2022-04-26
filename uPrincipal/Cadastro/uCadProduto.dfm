@@ -10,11 +10,14 @@ inherited frmCadProduto: TfrmCadProduto
     Width = 768
     Height = 403
     ActivePage = TabManutencao
+    ExplicitWidth = 768
+    ExplicitHeight = 403
     inherited tabListagem: TTabSheet
       ExplicitWidth = 760
       ExplicitHeight = 375
       inherited pnlListagemTopo: TPanel
         Width = 760
+        ExplicitWidth = 760
       end
       inherited grdListagem: TDBGrid
         Width = 760
@@ -108,45 +111,63 @@ inherited frmCadProduto: TfrmCadProduto
         Lines.Strings = (
           'edtDescricao')
         MaxLength = 255
-        TabOrder = 2
+        TabOrder = 3
       end
       object edtValor: TCurrencyEdit
+        Tag = 1
         Left = 24
         Top = 232
         Width = 121
         Height = 21
         DisplayFormat = 'R$ ,0.00;R$- ,0.00'
-        TabOrder = 3
+        TabOrder = 4
       end
       object edtQuantidade: TCurrencyEdit
+        Tag = 1
         Left = 151
         Top = 232
         Width = 121
         Height = 21
         DisplayFormat = ' ,0.00;- ,0.00'
-        TabOrder = 4
+        TabOrder = 5
       end
       object lkpCategoria: TDBLookupComboBox
+        Tag = 1
         Left = 383
         Top = 96
         Width = 178
         Height = 21
-        DataSource = dtsCategoria
+        Hint = 'z'
         KeyField = 'categoriaId'
         ListField = 'descricao'
-        ListSource = dtsCategoria
-        TabOrder = 5
+        ListFieldIndex = 2
+        TabOrder = 2
       end
     end
   end
   inherited pnlRodaPe: TPanel
     Top = 403
     Width = 768
+    ExplicitTop = 403
+    ExplicitWidth = 768
+    inherited btnAlterar: TBitBtn
+      Left = 185
+      ExplicitLeft = 185
+    end
+    inherited btnCancelar: TBitBtn
+      Left = 350
+      ExplicitLeft = 350
+    end
     inherited btnNavigator: TDBNavigator
       Hints.Strings = ()
     end
+    inherited btnDeletar: TBitBtn
+      Left = 269
+      ExplicitLeft = 269
+    end
     inherited btnFechar: TBitBtn
       Left = 684
+      ExplicitLeft = 684
     end
   end
   inherited QryListagem: TZQuery
@@ -191,30 +212,29 @@ inherited frmCadProduto: TfrmCadProduto
     end
   end
   inherited dtsListagem: TDataSource
-    Left = 148
-    Top = 32
-  end
-  object dtsCategoria: TDataSource
-    DataSet = QryCategoria
-    Left = 220
+    Left = 132
     Top = 32
   end
   object QryCategoria: TZQuery
     Connection = dtmPrincipal.conexaoDB
+    Active = True
     SQL.Strings = (
-      'SELECT categoriaId,descricao FROM categorias')
+      'SELECT categoriaId,descricao FROM CATEGORIAS')
     Params = <>
-    Left = 284
-    Top = 32
+    Left = 216
+    Top = 24
     object QryCategoriacategoriaId: TIntegerField
-      DisplayLabel = 'C'#243'digo'
       FieldName = 'categoriaId'
       ReadOnly = True
     end
     object QryCategoriadescricao: TWideStringField
-      DisplayLabel = 'Descri'#231#227'o'
       FieldName = 'descricao'
       Size = 100
     end
+  end
+  object dtsCategoria: TDataSource
+    DataSet = QryCategoria
+    Left = 276
+    Top = 24
   end
 end
