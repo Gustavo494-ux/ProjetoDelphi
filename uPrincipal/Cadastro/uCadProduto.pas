@@ -58,8 +58,9 @@ procedure TfrmCadProduto.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
   QryCategoria.Close;
+
   if Assigned(oProduto) then
-    FreeAndNil(oProduto);
+    oProduto.Free;
 end;
 
 procedure TfrmCadProduto.FormCreate(Sender: TObject);
@@ -71,7 +72,6 @@ begin
   QryCategoria.Open;
 
   lkpCategoria.ListSource := dtsCategoria;
-  edtDescricao.Text := '';
 
   oProduto := TProduto.Create(dtmPrincipal.conexaoDB);
   IndiceAtual := 'produtoId';

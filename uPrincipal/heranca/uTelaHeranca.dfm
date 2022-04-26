@@ -44,6 +44,13 @@ object frmTelaHeranca: TfrmTelaHeranca
           Height = 13
           Caption = 'Nome Campo'
         end
+        object Label1: TLabel
+          Left = 696
+          Top = 40
+          Width = 31
+          Height = 13
+          Caption = 'Label1'
+        end
         object mskEdit: TMaskEdit
           Left = 16
           Top = 22
@@ -89,6 +96,22 @@ object frmTelaHeranca: TfrmTelaHeranca
             00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
           TabOrder = 1
           Visible = False
+        end
+        object MaskEdit1: TMaskEdit
+          Left = 608
+          Top = 32
+          Width = 121
+          Height = 21
+          TabOrder = 2
+          Text = 'MaskEdit1'
+        end
+        object DateEdit1: TDateEdit
+          Left = 776
+          Top = 24
+          Width = 121
+          Height = 21
+          NumGlyphs = 2
+          TabOrder = 3
         end
       end
       object grdListagem: TDBGrid

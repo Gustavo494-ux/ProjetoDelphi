@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.DBCtrls, Vcl.Grids,
   Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask, Vcl.ComCtrls, Vcl.ExtCtrls,
   ZAbstractRODataset, ZAbstractDataset, ZDataset,
-  uDtmConexao,uEnum;
+  uDtmConexao,uEnum, RxCurrEdit, RxToolEdit;
 
 type
   TfrmTelaHeranca = class(TForm)
@@ -29,6 +29,9 @@ type
     dtsListagem: TDataSource;
     grdListagem: TDBGrid;
     Lbl_Indice: TLabel;
+    MaskEdit1: TMaskEdit;
+    DateEdit1: TDateEdit;
+    Label1: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
@@ -189,11 +192,29 @@ implementation
   procedure TfrmTelaHeranca.LimparEdit;
   var i:integer;
   begin
-     for I := 0 to ComponentCount -1 do
-     begin
+    for I := 0 to ComponentCount -1 do
+    begin
       If(Components[i] is TLabeledEdit) then
-           TLabeledEdit(Components[i]).Text := EmptyStr;
-     end;
+         TLabeledEdit(Components[i]).Text := EmptyStr
+
+      else If(Components[i] is TEdit) then
+           TEdit(Components[i]).Text := EmptyStr
+
+      else If(Components[i] is TMemo) then
+           TMemo(Components[i]).Text := EmptyStr
+
+      else If(Components[i] is TDBLookupComboBox) then
+           TDBLookupComboBox(Components[i]).KeyValue := null
+
+      else If(Components[i] is TCurrencyEdit) then
+           TCurrencyEdit(Components[i]).Value := 0
+
+      else If(Components[i] is TDateEdit) then
+           TDateEdit(Components[i]).Date := 0
+
+      else If(Components[i] is TMaskEdit) then
+           TMaskEdit(Components[i]).Text := EmptyStr;
+    end;
   end;
 
 
